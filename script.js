@@ -1,6 +1,6 @@
 function checkLogin() {
     const password = document.getElementById('password').value;
-    if (password.toLowerCase() === 'oursecret') {  // Change 'oursecret' to your actual password
+    if (password.toLowerCase() === 'khushikanoor') {  //
         document.getElementById('login').style.display = 'none';
         showCountdownOrBirthday();
     } else {
