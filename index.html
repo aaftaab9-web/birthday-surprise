@@ -24,8 +24,8 @@
         <div id="countdown"></div>
     </div>
 
-    <!-- Birthday reveal sequence container (hidden initially) -->
-    <div id="birthday-reveal" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; z-index: 1000;">
+    <!-- Birthday reveal sequence (full screen) -->
+    <div id="birthday-reveal" style="display: none; position: fixed; inset: 0; z-index: 1000; overflow: hidden;">
         <div id="black-overlay" class="black-overlay"></div>
         <div id="fireworks-layer" class="fireworks-layer"></div>
         <div class="reveal-content">
@@ -38,14 +38,26 @@
 
     <div id="birthday-page" style="display: none;">
         <h1>Happy Birthday, [Her Name]! 🎉</h1>
-        <p>You're now 24! [Your custom message here, e.g. I love you more every day! ❤️]</p>
-        <img src="https://i.imgur.com/yourimage1.jpg" alt="Photo 1" class="photo">
-        <img src="https://i.imgur.com/yourimage2.jpg" alt="Photo 2" class="photo">
+        <p>You're now 24! Here's to an amazing year ahead. [Add your custom message here, like: I love you more every day! ❤️]</p>
+        <img src="https://i.imgur.com/yourimage1.jpg" alt="Our photo 1" class="photo">
+        <img src="https://i.imgur.com/yourimage2.jpg" alt="Her photo" class="photo">
+        <!-- Add more <img> tags if you have extra photos -->
         <canvas id="confetti-canvas"></canvas>
     </div>
 
-    <!-- Audio (keep your existing ones + bgMusic) -->
-    <!-- ... your audio tags here ... -->
+    <!-- Audio elements -->
+    <audio id="typeSound" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_0d4f0e8b0e.mp3?filename=keyboard-typing-1-142528.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="errorSound" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/09/audio_3b0f0e8b0e.mp3?filename=wrong-answer-129254.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="successSound" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_4c0f0e8b0e.mp3?filename=success-1-6297.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="confettiSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-confetti-pop-289.mp3" type="audio/mpeg">
+    </audio>
     <audio id="bgMusic" loop preload="auto">
         <source src="https://www.orangefreesounds.com/wp-content/uploads/2016/08/Happy-birthday-instrumental.mp3" type="audio/mpeg">
     </audio>
