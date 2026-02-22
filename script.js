@@ -1,17 +1,36 @@
-// ... Your reactionMemes array and playSound function stay the same ...
-
-// Multiple funny waiting GIFs (random on countdown load)
-const waitingMemes = [
-    'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif', // Oops cat
-    'https://media.tenor.com/60Z-HjC_Vq8AAAAe/stanley-hudson.png', // Office side-eye
-    'https://media.giphy.com/media/l0HlRnAWXxn0MhKLK/giphy.gif', // Spongebob waiting impatiently
-    'https://media.giphy.com/media/26gsjCzRq3ltZjH8k/giphy.gif', // Mr Bean checking watch
-    'https://media.tenor.com/mEfCiGvbv5wAAAAe/passwordsafe-password.png' // Funny suspense
+// Funny typing reaction memes
+const reactionMemes = [
+    'https://media.tenor.com/mEfCiGvbv5wAAAAe/passwordsafe-password.png',
+    'https://media.pinatafarm.com/protected/328C475E-F05A-44AB-8608-52799BB902D5/a1817a87-6f47-4ba7-ab23-65b3623b78bf-1703330839216-pfarm-with-png-watermarked.webp',
+    'https://a.pinatafarm.com/620x500/41dca8f897/spongebob-waiting.jpg',
+    'https://media.tenor.com/60Z-HjC_Vq8AAAAe/stanley-hudson.png',
+    'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif'
 ];
 
+// Funny waiting memes for countdown
+const waitingMemes = [
+    'https://media.giphy.com/media/l0HlRnAWXxn0MhKLK/giphy.gif',
+    'https://media.giphy.com/media/26gsjCzRq3ltZjH8k/giphy.gif',
+    'https://media.tenor.com/60Z-HjC_Vq8AAAAe/stanley-hudson.png',
+    'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif',
+    'https://media.giphy.com/media/26tPplGWjNqSCURja/giphy.gif'
+];
+
+// Audio
+const typeSound = document.getElementById('typeSound');
+const errorSound = document.getElementById('errorSound');
+const successSound = document.getElementById('successSound');
+const confettiSound = document.getElementById('confettiSound');
+const bgMusic = document.getElementById('bgMusic');
+
+function playSound(audioElem) {
+    audioElem.currentTime = 0;
+    audioElem.play().catch(() => {});
+}
+
 function checkLogin() {
-    const password = document.getElementById('password').value;
-    if (password.toLowerCase() === 'oursecret') {  // CHANGE TO YOUR PASSWORD
+    const password = document.getElementById('password').value.toLowerCase();
+    if (password === 'oursecret') {  // ← CHANGE THIS TO YOUR ACTUAL PASSWORD
         playSound(successSound);
         playSound(confettiSound);
         bgMusic.play().catch(() => {});
@@ -29,14 +48,13 @@ function showCountdownOrBirthday() {
     const now = new Date();
 
     if (now >= birthday) {
-        startBirthdayReveal();  // New function for your sequence
+        startBirthdayReveal();
     } else {
         document.getElementById('countdown-page').style.display = 'block';
-        // Random waiting meme
         const randomWaiting = waitingMemes[Math.floor(Math.random() * waitingMemes.length)];
         document.getElementById('waiting-meme').src = randomWaiting;
         startCountdown(birthday);
-        launchConfetti(); // Burst on load
+        launchConfetti();
     }
 }
 
@@ -48,7 +66,7 @@ function startCountdown(birthday) {
 
         if (distance < 0) {
             clearInterval(interval);
-            startBirthdayReveal();  // Trigger reveal when time hits
+            startBirthdayReveal();
             return;
         }
 
@@ -61,9 +79,8 @@ function startCountdown(birthday) {
     }, 1000);
 }
 
-// Bigger, better confetti
 function launchConfetti() {
-    const duration = 8000; // Longer burst
+    const duration = 8000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
 
@@ -73,7 +90,6 @@ function launchConfetti() {
 
     (function frame() {
         const timeLeft = animationEnd - Date.now();
-
         if (timeLeft <= 0) return;
 
         const particleCount = 8 * (timeLeft / duration);
@@ -84,7 +100,6 @@ function launchConfetti() {
     }());
 }
 
-// Birthday reveal sequence
 function startBirthdayReveal() {
     const revealDiv = document.getElementById('birthday-reveal');
     revealDiv.style.display = 'block';
@@ -94,47 +109,59 @@ function startBirthdayReveal() {
         document.getElementById('black-overlay').style.opacity = 1;
     }, 500);
 
-    // Fireworks (confetti bursts)
+    // Fireworks/confetti bursts
     setTimeout(() => {
         for (let i = 0; i < 6; i++) {
             setTimeout(launchConfetti, i * 1200);
         }
     }, 2000);
 
-    // Show cake + wish text
+    // Show wish text
     setTimeout(() => {
         document.getElementById('wish-text').style.display = 'block';
     }, 3000);
 
-    // "Blow harder!"
+    // Blow harder prompt
     setTimeout(() => {
         document.getElementById('wish-text').style.display = 'none';
         document.getElementById('blow-harder').style.display = 'block';
     }, 7000);
 
-    // Final reveal: Happy Birthday + balloons
+    // Final reveal
     setTimeout(() => {
-        document.getElementById('birthday-reveal').style.display = 'none';
+        revealDiv.style.display = 'none';
         document.getElementById('birthday-page').style.display = 'block';
-        launchConfetti(); // Massive burst
-        createFloatingBalloons(30); // Lots of balloons
-        bgMusic.volume = 0.5; // Pump up music
-    }, 12000); // 5s after blow prompt (total ~12s from start)
+        launchConfetti();
+        createFloatingBalloons(35); // Lots of balloons
+        bgMusic.volume = 0.5;
+    }, 12000);
 }
 
-// Floating balloons (simple emoji version – lots!)
 function createFloatingBalloons(count) {
     const container = document.getElementById('balloons-container');
     for (let i = 0; i < count; i++) {
         const balloon = document.createElement('div');
         balloon.className = 'floating-balloon';
-        balloon.innerHTML = ['🎈', '❤️', '🎉', '🌟'][Math.floor(Math.random() * 4)];
+        balloon.innerHTML = ['🎈', '🎈', '❤️', '🎉', '🌸', '🌟'][Math.floor(Math.random() * 6)];
         balloon.style.left = Math.random() * 100 + 'vw';
-        balloon.style.animationDuration = (Math.random() * 8 + 8) + 's'; // 8-16s float
-        balloon.style.animationDelay = Math.random() * 3 + 's';
+        balloon.style.animationDuration = (Math.random() * 8 + 8) + 's';
+        balloon.style.animationDelay = Math.random() * 4 + 's';
         container.appendChild(balloon);
-        setTimeout(() => balloon.remove(), 20000);
+        setTimeout(() => balloon.remove(), 25000);
     }
 }
 
-// ... Your typing sound + meme on key events stay the same ...
+// Typing sound + meme on keystroke
+document.getElementById('password').addEventListener('keydown', function(e) {
+    if (e.key.length === 1) {
+        playSound(typeSound);
+    }
+});
+
+document.getElementById('password').addEventListener('keyup', function() {
+    const memeContainer = document.getElementById('meme-container');
+    const memeImg = document.getElementById('meme-img');
+    memeContainer.style.display = 'block';
+    const randomMeme = reactionMemes[Math.floor(Math.random() * reactionMemes.length)];
+    memeImg.src = randomMeme;
+});
