@@ -1,4 +1,4 @@
-// Typing reaction memes
+// Typing reaction memes (unchanged)
 const reactionMemes = [
     'https://media.tenor.com/mEfCiGvbv5wAAAAe/passwordsafe-password.png',
     'https://media.pinatafarm.com/protected/328C475E-F05A-44AB-8608-52799BB902D5/a1817a87-6f47-4ba7-ab23-65b3623b78bf-1703330839216-pfarm-with-png-watermarked.webp',
@@ -7,7 +7,7 @@ const reactionMemes = [
     'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif'
 ];
 
-// Waiting memes for countdown
+// Waiting memes for countdown (unchanged)
 const waitingMemes = [
     'https://media.giphy.com/media/l0HlRnAWXxn0MhKLK/giphy.gif',
     'https://media.giphy.com/media/26gsjCzRq3ltZjH8k/giphy.gif',
@@ -16,7 +16,10 @@ const waitingMemes = [
     'https://media.giphy.com/media/26tPplGWjNqSCURja/giphy.gif'
 ];
 
-// Audio references
+// Track wrong attempts
+let wrongAttempts = 0;
+
+// Audio
 const typeSound = document.getElementById('typeSound');
 const errorSound = document.getElementById('errorSound');
 const successSound = document.getElementById('successSound');
@@ -33,13 +36,14 @@ function playSound(audio) {
 function checkLogin() {
     const input = document.getElementById('password');
     if (!input) {
-        alert("Password input not found – refresh the page");
+        alert("Password field not found – try refreshing");
         return;
     }
 
     const password = input.value.trim().toLowerCase();
 
-    if (password === 'oursecret') {  // ← CHANGE THIS LINE TO YOUR DESIRED PASSWORD
+    if (password === 'khushikanoor') {
+        wrongAttempts = 0; // reset
         playSound(successSound);
         playSound(confettiSound);
         if (bgMusic) {
@@ -49,8 +53,15 @@ function checkLogin() {
         document.getElementById('login').style.display = 'none';
         showCountdownOrBirthday();
     } else {
+        wrongAttempts++;
         playSound(errorSound);
-        alert('Wrong password! Try again 😏');
+
+        let message = "Bss aahi pyaar sii? 😡";
+        if (wrongAttempts >= 3) {
+            message = "Khushi seriously 😢";
+        }
+
+        alert(message);
     }
 }
 
@@ -152,7 +163,7 @@ function createFloatingBalloons(count) {
     }
 }
 
-// Typing events
+// Typing effects
 const pwInput = document.getElementById('password');
 if (pwInput) {
     pwInput.addEventListener('keydown', e => {
