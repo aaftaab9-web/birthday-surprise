@@ -1,4 +1,4 @@
-// Funny typing reaction memes
+// Typing reaction memes
 const reactionMemes = [
     'https://media.tenor.com/mEfCiGvbv5wAAAAe/passwordsafe-password.png',
     'https://media.pinatafarm.com/protected/328C475E-F05A-44AB-8608-52799BB902D5/a1817a87-6f47-4ba7-ab23-65b3623b78bf-1703330839216-pfarm-with-png-watermarked.webp',
@@ -7,7 +7,7 @@ const reactionMemes = [
     'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif'
 ];
 
-// Funny waiting memes for countdown
+// Waiting memes for countdown
 const waitingMemes = [
     'https://media.giphy.com/media/l0HlRnAWXxn0MhKLK/giphy.gif',
     'https://media.giphy.com/media/26gsjCzRq3ltZjH8k/giphy.gif',
@@ -16,30 +16,41 @@ const waitingMemes = [
     'https://media.giphy.com/media/26tPplGWjNqSCURja/giphy.gif'
 ];
 
-// Audio
+// Audio references
 const typeSound = document.getElementById('typeSound');
 const errorSound = document.getElementById('errorSound');
 const successSound = document.getElementById('successSound');
 const confettiSound = document.getElementById('confettiSound');
 const bgMusic = document.getElementById('bgMusic');
 
-function playSound(audioElem) {
-    audioElem.currentTime = 0;
-    audioElem.play().catch(() => {});
+function playSound(audio) {
+    if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+    }
 }
 
 function checkLogin() {
-    const password = document.getElementById('password').value.toLowerCase();
-    if (password === 'oursecret') {  // ← CHANGE THIS TO YOUR ACTUAL PASSWORD
+    const input = document.getElementById('password');
+    if (!input) {
+        alert("Password input not found – refresh the page");
+        return;
+    }
+
+    const password = input.value.trim().toLowerCase();
+
+    if (password === 'oursecret') {  // ← CHANGE THIS LINE TO YOUR DESIRED PASSWORD
         playSound(successSound);
         playSound(confettiSound);
-        bgMusic.play().catch(() => {});
-        bgMusic.volume = 0.3;
+        if (bgMusic) {
+            bgMusic.play().catch(() => {});
+            bgMusic.volume = 0.3;
+        }
         document.getElementById('login').style.display = 'none';
         showCountdownOrBirthday();
     } else {
         playSound(errorSound);
-        alert('Oops! Try again 😏');
+        alert('Wrong password! Try again 😏');
     }
 }
 
@@ -51,18 +62,17 @@ function showCountdownOrBirthday() {
         startBirthdayReveal();
     } else {
         document.getElementById('countdown-page').style.display = 'block';
-        const randomWaiting = waitingMemes[Math.floor(Math.random() * waitingMemes.length)];
-        document.getElementById('waiting-meme').src = randomWaiting;
+        const randomMeme = waitingMemes[Math.floor(Math.random() * waitingMemes.length)];
+        document.getElementById('waiting-meme').src = randomMeme;
         startCountdown(birthday);
         launchConfetti();
     }
 }
 
 function startCountdown(birthday) {
-    const countdownElement = document.getElementById('countdown');
+    const countdownEl = document.getElementById('countdown');
     const interval = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = birthday - now;
+        const distance = birthday - Date.now();
 
         if (distance < 0) {
             clearInterval(interval);
@@ -70,18 +80,18 @@ function startCountdown(birthday) {
             return;
         }
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const days    = Math.floor(distance / 86400000);
+        const hours   = Math.floor((distance % 86400000) / 3600000);
+        const minutes = Math.floor((distance % 3600000) / 60000);
+        const seconds = Math.floor((distance % 60000) / 1000);
 
-        countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        countdownEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
 }
 
 function launchConfetti() {
     const duration = 8000;
-    const animationEnd = Date.now() + duration;
+    const end = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
 
     function randomInRange(min, max) {
@@ -89,7 +99,7 @@ function launchConfetti() {
     }
 
     (function frame() {
-        const timeLeft = animationEnd - Date.now();
+        const timeLeft = end - Date.now();
         if (timeLeft <= 0) return;
 
         const particleCount = 8 * (timeLeft / duration);
@@ -101,67 +111,60 @@ function launchConfetti() {
 }
 
 function startBirthdayReveal() {
-    const revealDiv = document.getElementById('birthday-reveal');
-    revealDiv.style.display = 'block';
+    const reveal = document.getElementById('birthday-reveal');
+    if (!reveal) return;
+    reveal.style.display = 'block';
 
-    // Fade to black
-    setTimeout(() => {
-        document.getElementById('black-overlay').style.opacity = 1;
-    }, 500);
+    setTimeout(() => document.getElementById('black-overlay').style.opacity = 1, 500);
 
-    // Fireworks/confetti bursts
     setTimeout(() => {
-        for (let i = 0; i < 6; i++) {
-            setTimeout(launchConfetti, i * 1200);
-        }
+        for (let i = 0; i < 6; i++) setTimeout(launchConfetti, i * 1200);
     }, 2000);
 
-    // Show wish text
-    setTimeout(() => {
-        document.getElementById('wish-text').style.display = 'block';
-    }, 3000);
+    setTimeout(() => document.getElementById('wish-text').style.display = 'block', 3000);
 
-    // Blow harder prompt
     setTimeout(() => {
         document.getElementById('wish-text').style.display = 'none';
         document.getElementById('blow-harder').style.display = 'block';
     }, 7000);
 
-    // Final reveal
     setTimeout(() => {
-        revealDiv.style.display = 'none';
+        reveal.style.display = 'none';
         document.getElementById('birthday-page').style.display = 'block';
         launchConfetti();
-        createFloatingBalloons(35); // Lots of balloons
-        bgMusic.volume = 0.5;
+        createFloatingBalloons(35);
+        if (bgMusic) bgMusic.volume = 0.5;
     }, 12000);
 }
 
 function createFloatingBalloons(count) {
     const container = document.getElementById('balloons-container');
+    if (!container) return;
     for (let i = 0; i < count; i++) {
-        const balloon = document.createElement('div');
-        balloon.className = 'floating-balloon';
-        balloon.innerHTML = ['🎈', '🎈', '❤️', '🎉', '🌸', '🌟'][Math.floor(Math.random() * 6)];
-        balloon.style.left = Math.random() * 100 + 'vw';
-        balloon.style.animationDuration = (Math.random() * 8 + 8) + 's';
-        balloon.style.animationDelay = Math.random() * 4 + 's';
-        container.appendChild(balloon);
-        setTimeout(() => balloon.remove(), 25000);
+        const b = document.createElement('div');
+        b.className = 'floating-balloon';
+        b.innerHTML = ['🎈','🎈','❤️','🎉','🌸','🌟'][Math.floor(Math.random()*6)];
+        b.style.left = Math.random()*100 + 'vw';
+        b.style.animationDuration = (Math.random()*8 + 8) + 's';
+        b.style.animationDelay = Math.random()*4 + 's';
+        container.appendChild(b);
+        setTimeout(() => b.remove(), 25000);
     }
 }
 
-// Typing sound + meme on keystroke
-document.getElementById('password').addEventListener('keydown', function(e) {
-    if (e.key.length === 1) {
-        playSound(typeSound);
-    }
-});
+// Typing events
+const pwInput = document.getElementById('password');
+if (pwInput) {
+    pwInput.addEventListener('keydown', e => {
+        if (e.key.length === 1) playSound(typeSound);
+    });
 
-document.getElementById('password').addEventListener('keyup', function() {
-    const memeContainer = document.getElementById('meme-container');
-    const memeImg = document.getElementById('meme-img');
-    memeContainer.style.display = 'block';
-    const randomMeme = reactionMemes[Math.floor(Math.random() * reactionMemes.length)];
-    memeImg.src = randomMeme;
-});
+    pwInput.addEventListener('keyup', () => {
+        const cont = document.getElementById('meme-container');
+        const img = document.getElementById('meme-img');
+        if (cont && img) {
+            cont.style.display = 'block';
+            img.src = reactionMemes[Math.floor(Math.random() * reactionMemes.length)];
+        }
+    });
+}
