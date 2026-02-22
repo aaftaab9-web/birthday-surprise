@@ -1,15 +1,19 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f0f8ff;
+    background-color: #fff0f5; /* Light pink base for floral theme */
     color: #333;
     margin: 0;
     padding: 20px;
+    background-image: url('https://www.transparenttextures.com/patterns/flowers.png'); /* Free floral pattern (sunflowers/lilies vibe) */
+    background-repeat: repeat;
+    background-size: auto;
 }
 
 h1 {
-    color: #ff69b4;
-    font-size: 2.5em;
+    color: #ff1493; /* Bright pink for fun */
+    font-size: 2em;
+    margin-bottom: 20px;
 }
 
 #countdown {
@@ -37,6 +41,7 @@ h1 {
 
 #login, #countdown-page, #birthday-page {
     margin-top: 50px;
+    position: relative; /* For absolute positioning flowers */
 }
 
 input, button {
@@ -44,3 +49,23 @@ input, button {
     font-size: 1em;
     margin: 10px;
 }
+
+.meme {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Scattered flowers: Position them randomly around the login area */
+.flower {
+    position: absolute;
+    font-size: 2em;
+    opacity: 0.8;
+}
+
+.flower1 { top: 10%; left: 20%; color: #ffd700; } /* Sunflower yellow */
+.flower2 { top: 30%; right: 15%; color: #ff69b4; } /* Pink lily */
+.flower3 { bottom: 20%; left: 10%; color: #ff4500; } /* Orange tulip */
+.flower4 { top: 50%; left: 50%; color: #c71585; } /* Purple rose */
+.flower5 { bottom: 10%; right: 25%; color: #00ff00; } /* Green stem-like */
