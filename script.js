@@ -1,4 +1,4 @@
-// Typing reaction memes (unchanged)
+// Typing reaction memes
 const reactionMemes = [
     'https://media.tenor.com/mEfCiGvbv5wAAAAe/passwordsafe-password.png',
     'https://media.pinatafarm.com/protected/328C475E-F05A-44AB-8608-52799BB902D5/a1817a87-6f47-4ba7-ab23-65b3623b78bf-1703330839216-pfarm-with-png-watermarked.webp',
@@ -7,7 +7,7 @@ const reactionMemes = [
     'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif'
 ];
 
-// Waiting memes for countdown (unchanged)
+// Waiting memes for countdown
 const waitingMemes = [
     'https://media.giphy.com/media/l0HlRnAWXxn0MhKLK/giphy.gif',
     'https://media.giphy.com/media/26gsjCzRq3ltZjH8k/giphy.gif',
@@ -16,15 +16,16 @@ const waitingMemes = [
     'https://media.giphy.com/media/26tPplGWjNqSCURja/giphy.gif'
 ];
 
-// Track wrong attempts
+// Track wrong password attempts
 let wrongAttempts = 0;
 
 // Audio
-const typeSound = document.getElementById('typeSound');
-const errorSound = document.getElementById('errorSound');
+const typeSound    = document.getElementById('typeSound');
+const errorSound   = document.getElementById('errorSound');
 const successSound = document.getElementById('successSound');
 const confettiSound = document.getElementById('confettiSound');
-const bgMusic = document.getElementById('bgMusic');
+const bgMusic      = document.getElementById('bgMusic');
+const loveSong     = document.getElementById('loveSong');
 
 function playSound(audio) {
     if (audio) {
@@ -36,14 +37,14 @@ function playSound(audio) {
 function checkLogin() {
     const input = document.getElementById('password');
     if (!input) {
-        alert("Password field not found – try refreshing");
+        alert("Password field not found – refresh the page");
         return;
     }
 
     const password = input.value.trim().toLowerCase();
 
     if (password === 'khushikanoor') {
-        wrongAttempts = 0; // reset
+        wrongAttempts = 0;
         playSound(successSound);
         playSound(confettiSound);
         if (bgMusic) {
@@ -66,7 +67,10 @@ function checkLogin() {
 }
 
 function showCountdownOrBirthday() {
-    const birthday = new Date('2026-02-25T00:00:00');
+    // FOR TESTING: set to past date so reveal triggers immediately
+    // When finished testing, change back to '2026-02-25T00:00:00'
+    const birthday = new Date('2026-02-18T12:00:00');  // ← past date for testing
+
     const now = new Date();
 
     if (now >= birthday) {
@@ -144,7 +148,16 @@ function startBirthdayReveal() {
         document.getElementById('birthday-page').style.display = 'block';
         launchConfetti();
         createFloatingBalloons(35);
-        if (bgMusic) bgMusic.volume = 0.5;
+
+        // Fade down birthday music
+        if (bgMusic) bgMusic.volume = 0.15;
+
+        // Start romantic love song
+        if (loveSong) {
+            loveSong.currentTime = 0;
+            loveSong.volume = 0.35;
+            loveSong.play().catch(() => {});
+        }
     }, 12000);
 }
 
@@ -163,7 +176,7 @@ function createFloatingBalloons(count) {
     }
 }
 
-// Typing effects
+// Typing sound + meme
 const pwInput = document.getElementById('password');
 if (pwInput) {
     pwInput.addEventListener('keydown', e => {
