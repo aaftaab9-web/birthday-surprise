@@ -8,17 +8,19 @@
 </head>
 <body>
     <div id="login">
-    <div class="flower-header"></div>
-    <h1>If you get this wrong, consider us divorced! 😡</h1>
-    <input type="password" id="password" placeholder="Hint: Our special word?">
-    <button onclick="checkLogin()">Enter</button>
-    <div id="meme-container" style="display: none; margin-top: 20px;">
-        <img id="meme-img" src="" alt="Funny Meme" class="meme">
-    </div>
-</div>
+        <!-- Flower border header -->
+        <div class="flower-header"></div>
+        
+        <h1>If you get this wrong, consider us divorced! 😡</h1>
+        <input type="password" id="password" placeholder="Hint: Our special word?">
+        <button onclick="checkLogin()">Enter</button>
+        <div id="meme-container" style="display: none; margin-top: 20px;">
+            <img id="meme-img" src="" alt="Funny Reaction" class="meme">
+        </div>
     </div>
     
     <div id="countdown-page" style="display: none;">
+        <img id="waiting-meme" src="https://a.pinatafarm.com/620x500/41dca8f897/spongebob-waiting.jpg" alt="Waiting impatiently meme" class="waiting-meme">
         <h1>Countdown to Your Birthday!</h1>
         <p>You're turning 24 on February 25, 2026!</p>
         <div id="countdown"></div>
@@ -29,10 +31,24 @@
         <p>You're now 24! Here's to an amazing year ahead. [Add your custom message here, like: I love you more every day!]</p>
         <img src="https://i.imgur.com/yourimage1.jpg" alt="Our photo 1" class="photo">
         <img src="https://i.imgur.com/yourimage2.jpg" alt="Her photo" class="photo">
-        <!-- Add more <img> tags for extra pictures -->
+        <!-- Add more <img> for extra pictures -->
         <canvas id="confetti-canvas"></canvas>
     </div>
     
+    <!-- Audio elements (hidden, preload for faster play) -->
+    <audio id="typeSound" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_0d4f0e8b0e.mp3?filename=keyboard-typing-1-142528.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="errorSound" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/09/audio_3b0f0e8b0e.mp3?filename=wrong-answer-129254.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="successSound" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_4c0f0e8b0e.mp3?filename=success-1-6297.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="confettiSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-confetti-pop-289.mp3" type="audio/mpeg">
+    </audio>
+
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </body>
