@@ -9,27 +9,28 @@
 <body>
     <div id="login">
         <div class="flower-header"></div>
+        
         <h1>If you get this wrong, consider us divorced! 😡</h1>
         <input type="password" id="password" placeholder="Hint: Our special word?">
         <button onclick="checkLogin()">Enter</button>
+        
         <div id="meme-container" style="display: none; margin-top: 20px;">
             <img id="meme-img" src="" alt="Funny Reaction" class="meme">
         </div>
     </div>
 
     <div id="countdown-page" style="display: none;">
-        <img id="waiting-meme" src="" alt="Waiting meme" class="waiting-meme">
+        <img id="waiting-meme" src="" alt="Funny waiting meme" class="waiting-meme">
         <h1>Countdown to Your Birthday!</h1>
         <p>You're turning 24 on February 25, 2026!</p>
         <div id="countdown"></div>
     </div>
 
-    <!-- Birthday reveal sequence (full screen) -->
+    <!-- Birthday reveal sequence overlay -->
     <div id="birthday-reveal" style="display: none; position: fixed; inset: 0; z-index: 1000; overflow: hidden;">
         <div id="black-overlay" class="black-overlay"></div>
-        <div id="fireworks-layer" class="fireworks-layer"></div>
         <div class="reveal-content">
-            <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" alt="Animated Birthday Cake with Candles" class="animated-cake">
+            <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" alt="Birthday Cake with Candles" class="animated-cake">
             <p id="wish-text" class="wish-text">Make a wish... Blow the candles! 🎂</p>
             <p id="blow-harder" class="wish-text" style="display:none; font-size:1.8em; color:#ff4500;">Blow harder!! 💨💨</p>
         </div>
@@ -38,14 +39,13 @@
 
     <div id="birthday-page" style="display: none;">
         <h1>Happy Birthday, [Her Name]! 🎉</h1>
-        <p>You're now 24! Here's to an amazing year ahead. [Add your custom message here, like: I love you more every day! ❤️]</p>
-        <img src="https://i.imgur.com/yourimage1.jpg" alt="Our photo 1" class="photo">
-        <img src="https://i.imgur.com/yourimage2.jpg" alt="Her photo" class="photo">
-        <!-- Add more <img> tags if you have extra photos -->
+        <p>You're now 24! Here's to an amazing year ahead. [Your loving message here ❤️]</p>
+        <img src="https://i.imgur.com/yourphoto1.jpg" alt="Our photo 1" class="photo">
+        <img src="https://i.imgur.com/yourphoto2.jpg" alt="Her photo" class="photo">
         <canvas id="confetti-canvas"></canvas>
     </div>
 
-    <!-- Audio elements -->
+    <!-- Audio -->
     <audio id="typeSound" preload="auto">
         <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_0d4f0e8b0e.mp3?filename=keyboard-typing-1-142528.mp3" type="audio/mpeg">
     </audio>
