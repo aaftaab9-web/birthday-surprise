@@ -1,24 +1,38 @@
-// Array of fun meme image URLs (free from Giphy/Imgur—add more if you want!)
-const memes = [
-    'https://media.giphy.com/media/3o7aCSPqXE5C6T8tBC/giphy.gif', // Cat meme
-    'https://media.giphy.com/media/26gsjCzRq3ltZjH8k/giphy.gif', // Funny reaction
-    'https://media.giphy.com/media/l0HlRnAWXxn0MhKLK/giphy.gif', // Dancing meme
-    'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif', // Oops face
-    'https://media.giphy.com/media/26tPplGWjNqSCURja/giphy.gif'  // Silly animal
+// Funny reaction memes (unchanged from before)
+const reactionMemes = [
+    'https://media.tenor.com/mEfCiGvbv5wAAAAe/passwordsafe-password.png',
+    'https://media.pinatafarm.com/protected/328C475E-F05A-44AB-8608-52799BB902D5/a1817a87-6f47-4ba7-ab23-65b3623b78bf-1703330839216-pfarm-with-png-watermarked.webp',
+    'https://a.pinatafarm.com/620x500/41dca8f897/spongebob-waiting.jpg',
+    'https://media.tenor.com/60Z-HjC_Vq8AAAAe/stanley-hudson.png',
+    'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif'
 ];
+
+// Audio elements
+const typeSound = document.getElementById('typeSound');
+const errorSound = document.getElementById('errorSound');
+const successSound = document.getElementById('successSound');
+const confettiSound = document.getElementById('confettiSound');
+
+function playSound(audioElem) {
+    audioElem.currentTime = 0; // Reset to start
+    audioElem.play().catch(e => console.log("Audio play blocked:", e)); // Catch mobile blocks
+}
 
 function checkLogin() {
     const password = document.getElementById('password').value;
-    if (password.toLowerCase() === 'oursecret') {  // Change 'oursecret' to your actual password
+    if (password.toLowerCase() === 'oursecret') {  // CHANGE THIS to your real password!
+        playSound(successSound);
+        playSound(confettiSound); // Extra pop with confetti
         document.getElementById('login').style.display = 'none';
         showCountdownOrBirthday();
     } else {
-        alert('Oops! Try again.');
+        playSound(errorSound);
+        alert('Oops! Try again 😏');
     }
 }
 
 function showCountdownOrBirthday() {
-    const birthday = new Date('2026-02-25T00:00:00');  // Adjust year if needed
+    const birthday = new Date('2026-02-25T00:00:00');
     const now = new Date();
     
     if (now >= birthday) {
@@ -27,6 +41,7 @@ function showCountdownOrBirthday() {
     } else {
         document.getElementById('countdown-page').style.display = 'block';
         startCountdown(birthday);
+        launchConfetti();  // Burst on countdown reveal
     }
 }
 
@@ -38,7 +53,7 @@ function startCountdown(birthday) {
         
         if (distance < 0) {
             clearInterval(interval);
-            location.reload();  // Reload to switch to birthday page
+            location.reload();
             return;
         }
         
@@ -52,28 +67,41 @@ function startCountdown(birthday) {
 }
 
 function launchConfetti() {
-    const canvas = document.getElementById('confetti-canvas');
-    confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-        target: canvas
-    });
-    setInterval(() => {
+    const duration = 5 * 1000;
+    const end = Date.now() + duration;
+
+    (function frame() {
         confetti({
-            particleCount: 50,
-            spread: 100,
-            origin: { y: 0.6 },
-            target: canvas
+            particleCount: 5,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 }
         });
-    }, 2000);  // Confetti bursts every 2 seconds
+        confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    }());
 }
 
-// Interactive meme: Show random meme on each keystroke in password
+// Typing sound + random meme on each keystroke
+document.getElementById('password').addEventListener('keydown', function(e) {
+    // Play typing sound on key down (more responsive than keyup)
+    if (e.key.length === 1) { // Only letters/symbols, not Enter/Backspace
+        playSound(typeSound);
+    }
+});
+
 document.getElementById('password').addEventListener('keyup', function() {
     const memeContainer = document.getElementById('meme-container');
     const memeImg = document.getElementById('meme-img');
     memeContainer.style.display = 'block';
-    const randomMeme = memes[Math.floor(Math.random() * memes.length)];
+    const randomMeme = reactionMemes[Math.floor(Math.random() * reactionMemes.length)];
     memeImg.src = randomMeme;
 });
