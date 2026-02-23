@@ -26,16 +26,13 @@
         <div id="countdown"></div>
     </div>
 
-    <!-- Birthday reveal overlay -->
-    <div id="birthday-reveal" style="display: none; position: fixed; inset: 0; z-index: 1000; overflow: hidden;">
-        <div id="black-overlay" class="black-overlay"></div>
-        <div id="reveal-waiting-meme" class="reveal-waiting-meme">
-            <img id="reveal-meme-img" src="" alt="Waiting during reveal" class="waiting-meme">
-        </div>
+    <!-- Birthday reveal – black with big cake in center -->
+    <div id="birthday-reveal" style="display: none; position: fixed; inset: 0; z-index: 1000; background: black;">
         <div class="reveal-content">
-            <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" alt="Birthday Cake with Candles" class="animated-cake" id="cake-img" style="display:none;">
-            <p id="wish-text" class="wish-text" style="display:none;">Make a wish... Blow the candles! 🎂</p>
-            <p id="blow-harder" class="wish-text" style="display:none; font-size:1.8em; color:#ff4500;">Blow harder!! 💨💨</p>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3d6b3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d/giphy.gif" 
+                 alt="Big Birthday Cake with Candles" class="big-cake" id="cake-img" style="display:none;">
+            <p id="blow-text" class="blow-text" style="display:none;">Blow the candles! 🎂</p>
+            <p id="blow-harder" class="blow-harder" style="display:none;">Blow harder!! 💨💨</p>
         </div>
         <div id="balloons-container"></div>
     </div>
@@ -48,7 +45,7 @@
         <canvas id="confetti-canvas"></canvas>
     </div>
 
-    <!-- All audio -->
+    <!-- Audio -->
     <audio id="typeSound" preload="auto">
         <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_0d4f0e8b0e.mp3?filename=keyboard-typing-1-142528.mp3" type="audio/mpeg">
     </audio>
