@@ -57,8 +57,9 @@ function checkLogin() {
 }
 
 function showCountdownOrBirthday() {
-    // FOR TESTING ONLY – change back to '2026-02-25T00:00:00' when done
-    const birthday = new Date('2026-02-18T12:00:00');  // past date
+    // TESTING: past date so reveal triggers quickly
+    // CHANGE BACK TO '2026-02-25T00:00:00' AFTER TESTING!!!
+    const birthday = new Date('2026-02-18T12:00:00');
 
     if (new Date() >= birthday) {
         startBirthdayReveal();
@@ -146,7 +147,7 @@ function startBirthdayReveal() {
         document.getElementById('blow-harder').style.display = 'block';
     }, 8000);
 
-    // Final happy birthday
+    // Final happy birthday page
     setTimeout(() => {
         reveal.style.display = 'none';
         document.getElementById('birthday-page').style.display = 'block';
@@ -171,7 +172,7 @@ function createFloatingBalloons(count) {
     for (let i = 0; i < count; i++) {
         const b = document.createElement('div');
         b.className = 'floating-balloon';
-        b.innerHTML = ['🎈','❤️','🎉','🌸','🌟','💕'][Math.floor(Math.random()*6)];
+        b.innerHTML = ['🎈','🎈','❤️','🎉','🌸','🌟'][Math.floor(Math.random()*6)];
         b.style.left = Math.random()*100 + 'vw';
         b.style.animationDuration = (Math.random()*9 + 9) + 's';
         b.style.animationDelay = Math.random()*3 + 's';
@@ -180,7 +181,7 @@ function createFloatingBalloons(count) {
     }
 }
 
-// Typing effects
+// Typing sound + meme
 const pwInput = document.getElementById('password');
 if (pwInput) {
     pwInput.addEventListener('keydown', e => {
