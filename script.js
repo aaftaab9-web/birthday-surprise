@@ -1,4 +1,4 @@
-// Typing reaction memes
+// Typing reaction memes (kept but only on login page)
 const reactionMemes = [
     'https://media.tenor.com/mEfCiGvbv5wAAAAe/passwordsafe-password.png',
     'https://media.pinatafarm.com/protected/328C475E-F05A-44AB-8608-52799BB902D5/a1817a87-6f47-4ba7-ab23-65b3623b78bf-1703330839216-pfarm-with-png-watermarked.webp',
@@ -7,7 +7,7 @@ const reactionMemes = [
     'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif'
 ];
 
-// Waiting memes
+// Waiting memes for countdown
 const waitingMemes = [
     'https://media.giphy.com/media/l0HlRnAWXxn0MhKLK/giphy.gif',
     'https://media.giphy.com/media/26gsjCzRq3ltZjH8k/giphy.gif',
@@ -57,8 +57,7 @@ function checkLogin() {
 }
 
 function showCountdownOrBirthday() {
-    // TESTING: past date so reveal triggers quickly
-    // CHANGE BACK TO '2026-02-25T00:00:00' AFTER TESTING!!!
+    // TESTING: past date – change back to '2026-02-25T00:00:00' after testing
     const birthday = new Date('2026-02-18T12:00:00');
 
     if (new Date() >= birthday) {
@@ -89,8 +88,8 @@ function startCountdown(birthday) {
     }, 1000);
 }
 
-function launchConfetti() {
-    const duration = 8000;
+function launchConfetti(short = false) {
+    const duration = short ? 3000 : 8000; // short burst for reveal
     const end = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
 
@@ -101,7 +100,7 @@ function launchConfetti() {
     function frame() {
         const timeLeft = end - Date.now();
         if (timeLeft <= 0) return;
-        const particleCount = 8 * (timeLeft / duration);
+        const particleCount = short ? 5 : 8 * (timeLeft / duration);
         confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
         confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
         requestAnimationFrame(frame);
@@ -114,38 +113,18 @@ function startBirthdayReveal() {
     if (!reveal) return;
     reveal.style.display = 'block';
 
-    // Show waiting meme during black phase
-    const revealMeme = document.getElementById('reveal-meme-img');
-    const randomRevealMeme = waitingMemes[Math.floor(Math.random() * waitingMemes.length)];
-    revealMeme.src = randomRevealMeme;
+    // Black screen + big cake in center
     setTimeout(() => {
-        document.getElementById('reveal-waiting-meme').style.opacity = 1;
-    }, 800);
-
-    // Fade to black
-    setTimeout(() => {
-        document.getElementById('black-overlay').style.opacity = 1;
+        document.getElementById('cake-img').style.display = 'block';
+        document.getElementById('blow-text').style.display = 'block';
+        launchConfetti(true); // short confetti burst
     }, 1500);
 
-    // Fireworks + confetti during black
+    // Blow harder prompt
     setTimeout(() => {
-        for (let i = 0; i < 8; i++) {
-            setTimeout(launchConfetti, i * 900);
-        }
-    }, 2000);
-
-    // Hide waiting meme, show cake
-    setTimeout(() => {
-        document.getElementById('reveal-waiting-meme').style.opacity = 0;
-        document.getElementById('cake-img').style.display = 'block';
-        document.getElementById('wish-text').style.display = 'block';
-    }, 5000);
-
-    // Blow harder
-    setTimeout(() => {
-        document.getElementById('wish-text').style.display = 'none';
+        document.getElementById('blow-text').style.display = 'none';
         document.getElementById('blow-harder').style.display = 'block';
-    }, 8000);
+    }, 5000);
 
     // Final happy birthday page
     setTimeout(() => {
@@ -163,7 +142,7 @@ function startBirthdayReveal() {
             loveSong.volume = 0.35;
             loveSong.play().catch(() => {});
         }
-    }, 13000);
+    }, 10000);
 }
 
 function createFloatingBalloons(count) {
@@ -181,7 +160,7 @@ function createFloatingBalloons(count) {
     }
 }
 
-// Typing sound + meme
+// Typing sound + meme (only on login page)
 const pwInput = document.getElementById('password');
 if (pwInput) {
     pwInput.addEventListener('keydown', e => {
