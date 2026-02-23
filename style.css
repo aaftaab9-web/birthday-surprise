@@ -1,12 +1,13 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     text-align: center;
-    background-color: #f5f0e6;
+    background: linear-gradient(to bottom, #fff5f8, #f0f8ff);
     color: #4a4a4a;
     margin: 0;
     padding: 0;
     min-height: 100vh;
     overflow-x: hidden;
+    position: relative;
 }
 
 .flower-header {
@@ -104,21 +105,6 @@ button:hover {
     display: block;
 }
 
-/* Reveal screen – black with big cake */
-#birthday-reveal {
-    background: black;
-}
-
-.reveal-content {
-    position: relative;
-    z-index: 2;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 .big-cake {
     width: 75%;
     max-width: 520px;
@@ -170,7 +156,7 @@ button:hover {
     100% { transform: translateY(-30vh) rotate(720deg); opacity: 0; }
 }
 
-/* General media query for smaller screens */
+/* Responsive */
 @media (max-width: 600px) {
     #countdown { font-size: 3.2em; }
     .big-cake { width: 85%; max-width: 380px; }
