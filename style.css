@@ -6,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .flower-header {
@@ -19,125 +20,135 @@ body {
 }
 
 #login, #countdown-page, #birthday-page {
-    padding: 20px;
-    max-width: 600px;
+    padding: 20px 15px;
+    max-width: 700px;
     margin: 20px auto;
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.12);
 }
 
 h1 {
     color: #c71585;
-    font-size: 1.8em;
-    margin: 20px 0 30px;
+    font-size: 2.1em;
+    margin: 25px 0 35px;
     line-height: 1.3;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
 
 #countdown {
-    font-size: 4em;
+    font-size: 4.5em;
     font-weight: bold;
     color: #ff1493;
-    margin: 40px 0;
-    letter-spacing: 5px;
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    margin: 50px 0;
+    letter-spacing: 6px;
+    text-shadow: 3px 3px 12px rgba(255,20,147,0.4);
 }
 
 .photo {
     width: 90%;
-    max-width: 320px;
-    margin: 15px auto;
+    max-width: 340px;
+    margin: 20px auto;
     display: block;
-    border: 3px solid #e8d5c3;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 4px solid #ffe4e1;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(255,105,180,0.25);
 }
 
 #confetti-canvas {
     position: fixed !important;
     inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
+    width: 100vw !important;
+    height: 100vh !important;
     pointer-events: none;
     z-index: 9999 !important;
 }
 
 input {
-    padding: 14px;
-    font-size: 1.2em;
-    width: 80%;
-    max-width: 320px;
-    margin: 15px 0;
-    border: 2px solid #d2b48c;
-    border-radius: 8px;
-    background-color: #fffaf0;
+    padding: 16px;
+    font-size: 1.3em;
+    width: 85%;
+    max-width: 360px;
+    margin: 20px 0;
+    border: 2px solid #ffb6c1;
+    border-radius: 12px;
+    background-color: #fff5f8;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
 }
 
 button {
-    padding: 14px 40px;
-    font-size: 1.2em;
+    padding: 16px 50px;
+    font-size: 1.3em;
     background-color: #ff69b4;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
-    margin: 15px 0;
+    margin: 20px 0;
+    box-shadow: 0 6px 20px rgba(255,105,180,0.4);
+    transition: all 0.3s;
 }
 
 button:hover {
     background-color: #ff1493;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255,20,147,0.5);
 }
 
 .meme, .waiting-meme {
     width: 80%;
-    max-width: 400px;
-    margin: 20px auto;
-    border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    max-width: 420px;
+    margin: 25px auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
     display: block;
 }
 
-.animated-cake {
-    width: 80%;
-    max-width: 400px;
-    margin: 30px auto;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.wish-text {
-    font-size: 2.5em;
-    color: #ffd700;
-    margin: 20px 0;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-}
-
-.black-overlay {
-    position: absolute;
-    inset: 0;
+/* Reveal screen – black with big cake */
+#birthday-reveal {
     background: black;
-    opacity: 0;
-    transition: opacity 2s ease-in;
 }
 
 .reveal-content {
     position: relative;
     z-index: 2;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.reveal-waiting-meme {
+.big-cake {
+    width: 75%;
+    max-width: 520px;
+    border-radius: 35px;
+    box-shadow: 0 20px 70px rgba(255,255,255,0.25);
+    margin: 0 auto;
+}
+
+.blow-text {
     position: absolute;
-    top: 50%;
+    top: 12%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
+    font-size: 4.2em;
+    font-weight: bold;
+    color: #fffacd;
+    text-shadow: 0 0 25px #ff4500, 0 0 50px #ff1493;
     z-index: 10;
-    opacity: 0;
-    transition: opacity 1.5s ease-in;
+    white-space: nowrap;
+}
+
+.blow-harder {
+    position: absolute;
+    bottom: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3.8em;
+    color: #ff6347;
+    text-shadow: 0 0 20px white, 0 0 40px #ff4500;
+    z-index: 10;
 }
 
 #balloons-container {
@@ -150,11 +161,19 @@ button:hover {
 
 .floating-balloon {
     position: absolute;
-    font-size: 3.5em;
+    font-size: 4em;
     animation: floatUp linear forwards;
 }
 
 @keyframes floatUp {
-    0% { transform: translateY(120vh) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-30vh) rotate(720deg); opacity: 0; }
+}
+
+/* General media query for smaller screens */
+@media (max-width: 600px) {
+    #countdown { font-size: 3.2em; }
+    .big-cake { width: 85%; max-width: 380px; }
+    .blow-text { font-size: 3em; top: 8%; }
+    .blow-harder { font-size: 2.8em; bottom: 15%; }
 }
