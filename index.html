@@ -26,23 +26,33 @@
         <div id="countdown"></div>
     </div>
 
-    <!-- Birthday reveal – black with big cake in center -->
-    <div id="birthday-reveal" style="display: none; position: fixed; inset: 0; z-index: 1000; background: black;">
-        <div class="reveal-content">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3d6b3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d/giphy.gif" 
-                 alt="Big Birthday Cake with Candles" class="big-cake" id="cake-img" style="display:none;">
-            <p id="blow-text" class="blow-text" style="display:none;">Blow the candles! 🎂</p>
-            <p id="blow-harder" class="blow-harder" style="display:none;">Blow harder!! 💨💨</p>
-        </div>
-        <div id="balloons-container"></div>
-    </div>
-
+    <!-- Interactive birthday page with clickable card -->
     <div id="birthday-page" style="display: none;">
-        <h1>Happy Birthday, Khushi! 🎉❤️</h1>
-        <p>You're 24 today! Here's to the most amazing year ahead, my love. You deserve everything beautiful. I love you more every single day.</p>
-        <img src="https://i.imgur.com/yourphoto1.jpg" alt="Our photo 1" class="photo">
-        <img src="https://i.imgur.com/yourphoto2.jpg" alt="Our photo 2" class="photo">
         <canvas id="confetti-canvas"></canvas>
+        <div class="page-content">
+            <h1>Happy Birthday, Khushi! 🎉❤️</h1>
+            <p>Tap the card below to open your special message, my love...</p>
+            
+            <div class="card-wrapper" id="cardWrapper">
+                <div class="card-front">
+                    <div class="envelope">
+                        <div class="envelope-front">
+                            <p>To my forever love, Khushi 🌹</p>
+                            <div class="flap"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-back">
+                    <p>Happy birthday my Love, My Dilla i love you soo much when you are gonna read this always remember i am always with you and and i love you soo fucking much i wanna wish you a happy 24th birthday. And just so you know, every moment with you feels like a dream come true. Your laughter is my favorite sound, your touch is my greatest comfort, and your love is the light that guides me through every day. Here's to us creating countless more memories, to more late-night talks, stolen kisses, and adventures together. You make my world brighter, Khushi. I am the luckiest to call you mine. Forever and always, Aaftaab 💖</p>
+                    <button onclick="closeCard()">Close Card</button>
+                </div>
+            </div>
+            
+            <div class="photos">
+                <img src="https://i.imgur.com/yourphoto1.jpg" alt="Our photo 1" class="photo">
+                <img src="https://i.imgur.com/yourphoto2.jpg" alt="Our photo 2" class="photo">
+            </div>
+        </div>
     </div>
 
     <!-- Audio -->
