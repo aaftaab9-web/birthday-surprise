@@ -7,7 +7,7 @@ const reactionMemes = [
     'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif'
 ];
 
-// Waiting memes for countdown
+// Waiting memes
 const waitingMemes = [
     'https://media.giphy.com/media/l0HlRnAWXxn0MhKLK/giphy.gif',
     'https://media.giphy.com/media/26gsjCzRq3ltZjH8k/giphy.gif',
@@ -16,16 +16,15 @@ const waitingMemes = [
     'https://media.giphy.com/media/26tPplGWjNqSCURja/giphy.gif'
 ];
 
-// Track wrong password attempts
 let wrongAttempts = 0;
 
 // Audio
-const typeSound    = document.getElementById('typeSound');
-const errorSound   = document.getElementById('errorSound');
-const successSound = document.getElementById('successSound');
+const typeSound     = document.getElementById('typeSound');
+const errorSound    = document.getElementById('errorSound');
+const successSound  = document.getElementById('successSound');
 const confettiSound = document.getElementById('confettiSound');
-const bgMusic      = document.getElementById('bgMusic');
-const loveSong     = document.getElementById('loveSong');
+const bgMusic       = document.getElementById('bgMusic');
+const loveSong      = document.getElementById('loveSong');
 
 function playSound(audio) {
     if (audio) {
@@ -36,10 +35,7 @@ function playSound(audio) {
 
 function checkLogin() {
     const input = document.getElementById('password');
-    if (!input) {
-        alert("Password field not found – refresh the page");
-        return;
-    }
+    if (!input) return alert("Password field missing – refresh page");
 
     const password = input.value.trim().toLowerCase();
 
@@ -47,33 +43,24 @@ function checkLogin() {
         wrongAttempts = 0;
         playSound(successSound);
         playSound(confettiSound);
-        if (bgMusic) {
-            bgMusic.play().catch(() => {});
-            bgMusic.volume = 0.3;
-        }
+        bgMusic?.play().catch(() => {});
+        bgMusic.volume = 0.3;
         document.getElementById('login').style.display = 'none';
         showCountdownOrBirthday();
     } else {
         wrongAttempts++;
         playSound(errorSound);
-
-        let message = "Bss aahi pyaar sii? 😡";
-        if (wrongAttempts >= 3) {
-            message = "Khushi seriously 😢";
-        }
-
-        alert(message);
+        let msg = "Bss aahi pyaar sii? 😡";
+        if (wrongAttempts >= 3) msg = "Khushi seriously 😢";
+        alert(msg);
     }
 }
 
 function showCountdownOrBirthday() {
-    // FOR TESTING: set to past date so reveal triggers immediately
-    // When finished testing, change back to '2026-02-25T00:00:00'
-    const birthday = new Date('2026-02-18T12:00:00');  // ← past date for testing
+    // FOR TESTING ONLY – change back to '2026-02-25T00:00:00' when done
+    const birthday = new Date('2026-02-18T12:00:00');  // past date
 
-    const now = new Date();
-
-    if (now >= birthday) {
+    if (new Date() >= birthday) {
         startBirthdayReveal();
     } else {
         document.getElementById('countdown-page').style.display = 'block';
@@ -85,22 +72,19 @@ function showCountdownOrBirthday() {
 }
 
 function startCountdown(birthday) {
-    const countdownEl = document.getElementById('countdown');
+    const el = document.getElementById('countdown');
     const interval = setInterval(() => {
-        const distance = birthday - Date.now();
-
-        if (distance < 0) {
+        const dist = birthday - Date.now();
+        if (dist < 0) {
             clearInterval(interval);
             startBirthdayReveal();
             return;
         }
-
-        const days    = Math.floor(distance / 86400000);
-        const hours   = Math.floor((distance % 86400000) / 3600000);
-        const minutes = Math.floor((distance % 3600000) / 60000);
-        const seconds = Math.floor((distance % 60000) / 1000);
-
-        countdownEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        const d = Math.floor(dist / 86400000);
+        const h = Math.floor((dist % 86400000) / 3600000);
+        const m = Math.floor((dist % 3600000) / 60000);
+        const s = Math.floor((dist % 60000) / 1000);
+        el.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
     }, 1000);
 }
 
@@ -113,16 +97,15 @@ function launchConfetti() {
         return Math.random() * (max - min) + min;
     }
 
-    (function frame() {
+    function frame() {
         const timeLeft = end - Date.now();
         if (timeLeft <= 0) return;
-
         const particleCount = 8 * (timeLeft / duration);
         confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
         confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-
         requestAnimationFrame(frame);
-    }());
+    }
+    frame();
 }
 
 function startBirthdayReveal() {
@@ -130,35 +113,56 @@ function startBirthdayReveal() {
     if (!reveal) return;
     reveal.style.display = 'block';
 
-    setTimeout(() => document.getElementById('black-overlay').style.opacity = 1, 500);
-
+    // Show waiting meme during black phase
+    const revealMeme = document.getElementById('reveal-meme-img');
+    const randomRevealMeme = waitingMemes[Math.floor(Math.random() * waitingMemes.length)];
+    revealMeme.src = randomRevealMeme;
     setTimeout(() => {
-        for (let i = 0; i < 6; i++) setTimeout(launchConfetti, i * 1200);
+        document.getElementById('reveal-waiting-meme').style.opacity = 1;
+    }, 800);
+
+    // Fade to black
+    setTimeout(() => {
+        document.getElementById('black-overlay').style.opacity = 1;
+    }, 1500);
+
+    // Fireworks + confetti during black
+    setTimeout(() => {
+        for (let i = 0; i < 8; i++) {
+            setTimeout(launchConfetti, i * 900);
+        }
     }, 2000);
 
-    setTimeout(() => document.getElementById('wish-text').style.display = 'block', 3000);
+    // Hide waiting meme, show cake
+    setTimeout(() => {
+        document.getElementById('reveal-waiting-meme').style.opacity = 0;
+        document.getElementById('cake-img').style.display = 'block';
+        document.getElementById('wish-text').style.display = 'block';
+    }, 5000);
 
+    // Blow harder
     setTimeout(() => {
         document.getElementById('wish-text').style.display = 'none';
         document.getElementById('blow-harder').style.display = 'block';
-    }, 7000);
+    }, 8000);
 
+    // Final happy birthday
     setTimeout(() => {
         reveal.style.display = 'none';
         document.getElementById('birthday-page').style.display = 'block';
         launchConfetti();
-        createFloatingBalloons(35);
+        createFloatingBalloons(40);
 
-        // Fade down birthday music
+        // Fade original music
         if (bgMusic) bgMusic.volume = 0.15;
 
-        // Start romantic love song
+        // Romantic love song
         if (loveSong) {
             loveSong.currentTime = 0;
             loveSong.volume = 0.35;
             loveSong.play().catch(() => {});
         }
-    }, 12000);
+    }, 13000);
 }
 
 function createFloatingBalloons(count) {
@@ -167,16 +171,16 @@ function createFloatingBalloons(count) {
     for (let i = 0; i < count; i++) {
         const b = document.createElement('div');
         b.className = 'floating-balloon';
-        b.innerHTML = ['🎈','🎈','❤️','🎉','🌸','🌟'][Math.floor(Math.random()*6)];
+        b.innerHTML = ['🎈','❤️','🎉','🌸','🌟','💕'][Math.floor(Math.random()*6)];
         b.style.left = Math.random()*100 + 'vw';
-        b.style.animationDuration = (Math.random()*8 + 8) + 's';
-        b.style.animationDelay = Math.random()*4 + 's';
+        b.style.animationDuration = (Math.random()*9 + 9) + 's';
+        b.style.animationDelay = Math.random()*3 + 's';
         container.appendChild(b);
-        setTimeout(() => b.remove(), 25000);
+        setTimeout(() => b.remove(), 30000);
     }
 }
 
-// Typing sound + meme
+// Typing effects
 const pwInput = document.getElementById('password');
 if (pwInput) {
     pwInput.addEventListener('keydown', e => {
