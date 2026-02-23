@@ -105,6 +105,16 @@ button:hover {
     display: block;
 }
 
+.reveal-content {
+    position: relative;
+    z-index: 2;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .big-cake {
     width: 75%;
     max-width: 520px;
